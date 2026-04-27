@@ -1,7 +1,7 @@
-flask
-flask-cors
-requests
-numpy
-pandas
-gunicorn
-google-generativeai
+flask 
+flask-cors 
+requests 
+numpy 
+pandas 
+gunicorn 
+google-generativeai 
