@@ -1,27 +1,37 @@
 import React, { useEffect } from "react";
-import mapboxgl from "mapbox-gl";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
-mapboxgl.accessToken = "YOUR_MAPBOX_TOKEN";
+// Fix marker icon issue (important for deployment)
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
 
 const MapView = ({ risk }) => {
-  useEffect(() => {
-    const map = new mapboxgl.Map({
-      container: "map",
-      style: "mapbox://styles/mapbox/dark-v10",
-      center: [77.1025, 28.7041],
-      zoom: 10,
-    });
+  const position = [28.7041, 77.1025]; // Delhi
 
-    if (risk === "HIGH") {
-      new mapboxgl.Marker({ color: "red" })
-        .setLngLat([77.1025, 28.7041])
-        .addTo(map);
-    }
+  return (
+    <MapContainer
+      center={position}
+      zoom={10}
+      style={{ height: "400px", width: "100%" }}
+    >
+      <TileLayer
+        attribution="&copy; OpenStreetMap contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
 
-    return () => map.remove();
-  }, [risk]);
-
-  return <div id="map" style={{ height: "400px" }} />;
+      {risk === "HIGH" && (
+        <Marker position={position}>
+          <Popup>High Risk Area 🚨</Popup>
+        </Marker>
+      )}
+    </MapContainer>
+  );
 };
 
 export default MapView;
