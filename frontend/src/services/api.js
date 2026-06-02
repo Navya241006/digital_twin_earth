@@ -3,7 +3,7 @@ import axios from "axios";
 export const runSimulation = async (inputs) => {
   try {
     const res = await axios.post(
-      "https://digitaltwinearth-production.up.railway.app/simulate", 
+      "https://digital-twin-earth.onrender.com", 
       inputs,
       {
         headers: {
