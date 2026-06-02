@@ -6,7 +6,7 @@ const ControlPanel = () => {
   const runSimulation = async () => {
     try {
       const res = await fetch(
-        "https://digitaltwinearth-production.up.railway.app/simulate",
+        "https://digital-twin-earth.onrender.com",
         {
           method: "POST",
           headers: {
